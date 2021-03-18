@@ -2,6 +2,10 @@ variable "prefix" {
   default = "constructor-test-infra"
 }
 
+provider "azurerm" {
+    features {}
+}
+
 resource "azurerm_resource_group" "main" {
   name     = "${var.prefix}-resources"
   location = "West Europe"
