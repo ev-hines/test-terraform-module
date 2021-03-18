@@ -15,7 +15,7 @@ weights = {
 }
 
 # Consider exactly these resource types in calculations
-resource_types = {"aws_autoscaling_group", "aws_instance", "aws_iam", "aws_launch_configuration"}
+resource_types = {"azurerm_virtual_machine"}
 
 #########
 # Policy
