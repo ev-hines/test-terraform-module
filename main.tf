@@ -75,3 +75,7 @@ resource "azurerm_virtual_machine" "main" {
     environment = "staging"
   }
 }
+
+output "test" {
+    value = azurerm_virtual_machine.main
+}
