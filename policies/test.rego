@@ -11,7 +11,7 @@ blast_radius = 30
 
 # weights assigned for each operation on each resource-type
 weights = {
-    "azurerm_virtual_machine": {"delete": 10, "create": 1000, "modify": 1}
+    "azurerm_virtual_machine": {"delete": 10, "create": 10, "modify": 1}
 }
 
 # Consider exactly these resource types in calculations
