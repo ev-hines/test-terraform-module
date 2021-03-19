@@ -82,7 +82,7 @@ resource "azurerm_virtual_machine" "main" {
   }
   os_profile {
     computer_name  = "sandbox"
-    admin_username = "sandbox_stack_admin"
+    admin_username = "azuresandboxuser"
   }
 
   os_profile_linux_config {
@@ -92,7 +92,7 @@ resource "azurerm_virtual_machine" "main" {
       for_each = var.public_ssh_keys
       content {
         key_data = ssh_keys.value
-        path = "home/sandbox_stack_admin/.ssh/authorized_keys"
+        path = "home/azuresandboxuser/.ssh/authorized_keys"
       }
     }
   }
@@ -102,5 +102,5 @@ resource "azurerm_virtual_machine" "main" {
 }
 
 output "ssh" {
-    value = "ssh sandbox_stack_admin@${azurerm_public_ip.ip.ip_address}"
+    value = "ssh azuresandboxuser@${azurerm_public_ip.ip.ip_address}"
 }
