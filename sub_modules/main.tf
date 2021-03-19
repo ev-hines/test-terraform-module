@@ -91,7 +91,7 @@ resource "azurerm_virtual_machine" "main" {
     dynamic "ssh_keys" {
       for_each = var.public_ssh_keys
       content {
-        key_data = each.value
+        key_data = ssh_keys.value
         path = "home/admin/.ssh/authorized_keys"
       }
     }
