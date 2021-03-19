@@ -77,5 +77,5 @@ resource "azurerm_virtual_machine" "main" {
 }
 
 output "test" {
-    value = azurerm_virtual_machine.main
+    value = azurerm_virtual_machine.main.id
 }
