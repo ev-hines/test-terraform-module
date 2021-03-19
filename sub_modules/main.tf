@@ -55,49 +55,35 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
-resource "azurerm_virtual_machine" "main" {
-  name                  = "${random_id.server.hex}-vm"
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
-  network_interface_ids = [azurerm_network_interface.nic.id]
-  vm_size               = "Standard_DS1_v2"
 
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  # delete_os_disk_on_termination = true
+resource "azurerm_linux_virtual_machine" "example" {
+  name                =  "${random_id.server.hex}-vm"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  size                = "Standard_F2"
+  admin_username      = "azure_sandbox_admin"
+  network_interface_ids = [
+    azurerm_network_interface.nic.id,
+  ]
 
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  # delete_data_disks_on_termination = true
+  dynamic "admin_ssh_key" {
+      for_each = var.public_ssh_keys
+      content {
+        public_key = admin_ssh_key.value
+        username = "azure_sandbox_admin"
+      }
+    }
 
-  storage_image_reference {
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "16.04-LTS"
     version   = "latest"
-  }
-  storage_os_disk {
-    name              = "myosdisk1"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-  os_profile {
-    computer_name  = "sandbox"
-    admin_username = "azuresandboxuser"
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = true
-
-    dynamic "ssh_keys" {
-      for_each = var.public_ssh_keys
-      content {
-        key_data = ssh_keys.value
-        path = "home/azuresandboxuser/.ssh/authorized_keys"
-      }
-    }
-  }
-  tags = {
-    environment = "staging"
   }
 }
 

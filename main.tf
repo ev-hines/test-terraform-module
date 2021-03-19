@@ -7,17 +7,17 @@ variable "public_ssh_keys" {
 }
 
 provider "azurerm" {
-    features {}
+  features {}
 }
 
 module "region_vm" {
-    for_each = var.regions
-    source = "./sub_modules/"
+  for_each = var.regions
+  source   = "./sub_modules/"
 
-    region = each.value
-    public_ssh_keys = var.public_ssh_keys
+  region          = each.value
+  public_ssh_keys = var.public_ssh_keys
 }
 
 output "ssh" {
-    value = [for x in module.region_vm : x.ssh]
+  value = [for x in module.region_vm : x.ssh]
 }
