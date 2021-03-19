@@ -19,5 +19,5 @@ module "region_vm" {
 }
 
 output "ssh" {
-    value = module.region_vm.*.ssh
+    value = [for x in module.region_vm : x.ssh]
 }
