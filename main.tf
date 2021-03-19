@@ -1,5 +1,4 @@
 variable "prefix" {
-  default = "constructor-test-infra"
 }
 
 provider "azurerm" {
