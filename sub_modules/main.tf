@@ -88,5 +88,5 @@ resource "azurerm_linux_virtual_machine" "example" {
 }
 
 output "ssh" {
-    value = "ssh azuresandboxuser@${azurerm_public_ip.ip.ip_address}"
+    value = "ssh azure_sandbox_admin@${azurerm_public_ip.ip.ip_address}"
 }
